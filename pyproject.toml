@@ -5,7 +5,7 @@ description = ""
 authors = ["Pavel Melnikov"]
 
 [tool.poetry.dependencies]
-python = "^3.11"
+python = "^3.12"
 rich = "^13.7.0"
 
 
