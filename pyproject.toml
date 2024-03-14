@@ -2,7 +2,7 @@
 name = "tasks"
 version = "0.1.0"
 description = ""
-authors = ["Pavel Melnikov <room.apps@mail.ru>"]
+authors = ["Pavel Melnikov"]
 
 [tool.poetry.dependencies]
 python = "^3.11"
