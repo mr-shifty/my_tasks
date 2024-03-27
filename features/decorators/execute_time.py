@@ -24,10 +24,10 @@ def execute_time(limit: float = 1) -> Any:
             execution_time = end_time - start_time
 
             print(
-                f"[yellow]:stopwatch:  [italic]Время выполнения: "
+                f"\n[yellow]:stopwatch:  [italic]Время выполнения: "
                 f"[bold][#73FF73]{round(execution_time, 3)}[/#73FF73][/bold] сек :rocket:"
                 if execution_time < limit
-                else f"[yellow]:stopwatch:  [italic]Время выполнения: "
+                else f"\n[yellow]:stopwatch:  [italic]Время выполнения: "
                 f"[bold][red]{round(execution_time, 3)}[/red][/bold] сек :snail:"
             )
             print(
