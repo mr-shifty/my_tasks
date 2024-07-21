@@ -1,6 +1,6 @@
-import pretty_errors
 from math import factorial
 
+import pretty_errors
 
 with open("url.txt", "w", encoding="utf-8") as url:
     text = input()
