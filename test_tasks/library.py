@@ -11,20 +11,6 @@ book = [
 ]
 
 
-def create(lst):
-    lst.append(
-        {
-            "id": 2,
-            "title": input("Введите название книги: "),
-            "author": input("Введите автора: "),
-            "year": int(input("Введите год: ")),
-            "status": "В наличии",
-        },
-    )
-    print(lst)
-    return lst
-
-
 class Library:
     def __init__(self) -> None:
         self.id = "id"
@@ -36,7 +22,7 @@ class Library:
     def create(self, lst):
         lst.append(
             {
-                self.id: 2,
+                self.id: len(lst) + 1,
                 self.title: input("Введите название книги: "),
                 self.author: input("Введите автора: "),
                 self.year: int(input("Введите год: ")),
@@ -62,7 +48,7 @@ def main():
         1. Добавить книгу,
         2. Удалить книгу,
         3. Отобразить все книги,
-        4. Изменить статус книги\t
+        4. Изменить статус книги
         """
     )
     try:
