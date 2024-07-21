@@ -1,12 +1,19 @@
 from rich import print
 
-book = [
+books = [
     {
         "id": 1,
         "title": "hui",
         "author": "Her Mayor",
         "year": 1984,
         "status": "В наличии",
+    },
+    {
+        "id": 2,
+        "title": "bla",
+        "author": "Bla Bla",
+        "year": 1488,
+        "status": "Нет в наличии",
     },
 ]
 
@@ -32,7 +39,7 @@ class Library:
         print(lst)
         return lst
 
-    def delete(self):
+    def delete(self, lst):
         pass
 
     def read(self):
@@ -40,6 +47,9 @@ class Library:
 
     def change_status(self):
         pass
+
+
+library = Library()
 
 
 def main():
@@ -53,8 +63,7 @@ def main():
     )
     try:
         int(input("Введите число для выбора: "))
-        library = Library()
-        library.create(book)
+        library.create(books)
     except ValueError:
         print("Дурак? Сказали же число ввести")
         main()
