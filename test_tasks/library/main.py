@@ -1,7 +1,7 @@
 from rich import print
 
-from test_tasks.library import Library
-from test_tasks.test_info import books
+from test_tasks.library.hendler import Library
+from test_tasks.library.test_info import books
 
 library = Library()
 
