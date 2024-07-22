@@ -53,17 +53,32 @@ class Library:
             json.dump(data, file, ensure_ascii=False, indent=2)
 
     def delete(self):
-        # with open(self.data, encoding="utf-8") as file:
-        #     data = json.load(file)
-        #     remove_id = int(input())
-        #     for
-        pass
+        with open(self.data, encoding="utf-8") as file:
+            data = json.load(file)
+            self.author = input("Введите имя автора, книгу которого удаляем: ")
+            remove_id = str(input("Напишите id удаляемой книги"))
+            removed = data[self.author].pop(remove_id)
+        with open(self.data, "w", encoding="utf-8") as file:
+            json.dump(data, file, ensure_ascii=False, indent=2)
+        print(f"Удален {removed} ")
 
     def read(self):
         with open(self.data, encoding="utf=8") as file:
             data = json.load(file)
             for key, value in data.items():
-                print(f"\nid={key}: {value}")
+                print(f"\n{key}: {value}")
 
     def change_status(self):
-        pass
+        with open(self.data, encoding="utf-8") as file:
+            data = json.load(file)
+            self.author = input("Введите имя автора: ")
+            id = str(input("id книги: "))
+            print(data[self.author][id][self.status])
+            data[self.author][id][self.status] = [
+                "Нет в наличии", "В наличии"][int(input())
+            ]
+            
+        with open(self.data, "w", encoding="utf-8") as file:
+            json.dump(data, file, ensure_ascii=False, indent=2)
+            
+

@@ -26,17 +26,17 @@ def main():
                 else library.create()
             )
         case 2:
-            pass
+            library.delete()
         case 3:
             library.read()
         case 4:
-            pass
+            library.change_status()
         case 5:
             exit()
         case _:
             print("Введите число от 1 до 5 или проваливайте")
             main()
-    main() if input("Выполнить еще? ") == "y" else exit()
+    main() if input("Продолжить? y / выход - любая клавиша") == "y" else exit()
 
     # except ValueError:
     #     print("Дурак? Сказали же число ввести")
