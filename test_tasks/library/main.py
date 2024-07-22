@@ -13,30 +13,30 @@ def main():
             2. Удалить книгу,
             3. Отобразить все книги,
             4. Изменить статус книги
-            5. Выход
+            q. Выход
             """
     )
     # try:
 
-    match int(input("Введите число для выбора (1-5) ")):
-        case 1:
+    match input("Введите число для выбора (1-4) или q для выхода "):
+        case "1":
             (
                 library.update()
                 if os.path.exists("data.json")
                 else library.create()
             )
-        case 2:
+        case "2":
             library.delete()
-        case 3:
+        case "3":
             library.read()
-        case 4:
+        case "4":
             library.change_status()
-        case 5:
+        case "q":
             exit()
         case _:
-            print("Введите число от 1 до 5 или проваливайте")
+            print("Введите число от 1 до 4 или q для выхода")
             main()
-    main() if input("Продолжить? y / выход - любая клавиша") == "y" else exit()
+    (main() if input("Продолжить - Enter, q - выход ") != "q" else exit())
 
     # except ValueError:
     #     print("Дурак? Сказали же число ввести")

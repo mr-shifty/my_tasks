@@ -73,9 +73,16 @@ class Library:
             data = json.load(file)
             self.author = input("Введите имя автора: ")
             id = str(input("id книги: "))
-            print(data[self.author][id][self.status])
+            print(f"\nТекущий статус: {data[self.author][id][self.status]}")
             data[self.author][id][self.status] = [
-                "Нет в наличии", "В наличии"][int(input())
+                "Нет в наличии", "В наличии"][int(input(
+"""
+            0 - Нет в наличии
+            1 - В наличии 
+
+
+Ваш выбор: """
+            ))
             ]
             
         with open(self.data, "w", encoding="utf-8") as file:
