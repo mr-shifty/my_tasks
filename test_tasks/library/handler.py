@@ -12,9 +12,7 @@ class Library:
         self.status = "Статус книги"
 
     def create(self):
-        with open(
-            "data.json", "w", encoding="utf-8", errors="replace"
-        ) as file:
+        with open("data.json", "w", encoding="utf-8", errors="ignore") as file:
 
             dct = {
                 input("Введите автора: "): {
@@ -29,7 +27,7 @@ class Library:
         print("Книга успешно добавлена")
 
     def update(self):
-        with open(self.data, encoding="utf-8", errors="replace") as file:
+        with open(self.data, encoding="utf-8", errors="ignore") as file:
             self.id = int(time.time() * 1000)
             data = json.load(file)
             self.author = input("Введите автора: ")
@@ -53,7 +51,7 @@ class Library:
                 }
         print("Книга успешно добавлена")
 
-        with open(self.data, "w", encoding="utf-8", errors="replace") as file:
+        with open(self.data, "w", encoding="utf-8", errors="ignore") as file:
             json.dump(data, file, indent=2)
 
     def read(self):
@@ -61,10 +59,15 @@ class Library:
             with open(self.data, encoding="utf=8") as file:
                 data = json.load(file)
                 flag = False
+                all_count = 0
                 for key, value in data.items():
                     if value:
                         flag = True
-                        print(f"\nАвтор: {key}\n" f"Книги:")
+                        # print(f"\nНайдено {key}: {len(value.values())} шт.")
+                        print(
+                            f"\nАвтор: {key} ({len(value.values())} шт.)\n"
+                            f"Книги:"
+                        )
                         for k, v in value.items():
                             print(
                                 f"\tid: {k}\n"
@@ -72,6 +75,10 @@ class Library:
                                 f"\tГод издания: {v[self.year]}\n"
                                 f"\tСтатус: {v[self.status]}\n"
                             )
+                            all_count += 1
+                if flag:
+                    print(f"\nИтого книг: {all_count}\n")
+
                 if not flag:
                     print("\nНе найдено ни одной книги\n")
                     return 1
@@ -102,7 +109,7 @@ class Library:
                         Library.delete(self)
 
             with open(
-                self.data, "w", encoding="utf-8", errors="replace"
+                self.data, "w", encoding="utf-8", errors="ignore"
             ) as file:
                 json.dump(data, file, indent=2)
 
