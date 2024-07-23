@@ -63,7 +63,6 @@ class Library:
                 for key, value in data.items():
                     if value:
                         flag = True
-                        # print(f"\nНайдено {key}: {len(value.values())} шт.")
                         print(
                             f"\nАвтор: {key} ({len(value.values())} шт.)\n"
                             f"Книги:"
