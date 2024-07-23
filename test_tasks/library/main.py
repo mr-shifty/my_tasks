@@ -26,11 +26,9 @@ def main():
         case "2":
             library.delete()
         case "3":
-            (
-                library.read()
-                if os.path.exists("data.json")
-                else print("Пока что библиотека пуста")
-            )
+            library.read()
+            # if os.path.exists("data.json")
+            # else print("Пока что библиотека пуста")
 
         case "4":
             library.change_status()
