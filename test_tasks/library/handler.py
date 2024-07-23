@@ -12,7 +12,9 @@ class Library:
         self.status = "Статус книги"
 
     def create(self):
-        with open("data.json", "w", encoding="utf-8", errors="replace") as file:
+        with open(
+            "data.json", "w", encoding="utf-8", errors="replace"
+        ) as file:
 
             dct = {
                 input("Введите автора: "): {
@@ -24,7 +26,7 @@ class Library:
                 },
             }
             json.dump(dct, file, indent=2)
-        print("Книга успешно добавлена") 
+        print("Книга успешно добавлена")
 
     def update(self):
         with open(self.data, encoding="utf-8", errors="replace") as file:
@@ -49,7 +51,7 @@ class Library:
                     self.year: int(input("Введите год: ")),
                     self.status: "В наличии",
                 }
-        print("Книга успешно добавлена") 
+        print("Книга успешно добавлена")
 
         with open(self.data, "w", encoding="utf-8", errors="replace") as file:
             json.dump(data, file, indent=2)
@@ -62,17 +64,14 @@ class Library:
                 for key, value in data.items():
                     if value:
                         flag = True
-                        print(
-                            f"\nАвтор: {key}\n"
-                            f"Книги:"
-                        )
+                        print(f"\nАвтор: {key}\n" f"Книги:")
                         for k, v in value.items():
                             print(
-                                    f"\tid: {k}\n"
-                                    f"\tНазвание: {v[self.title]}\n"
-                                    f"\tГод издания: {v[self.year]}\n"
-                                    f"\tСтатус: {v[self.status]}\n"
-                    )
+                                f"\tid: {k}\n"
+                                f"\tНазвание: {v[self.title]}\n"
+                                f"\tГод издания: {v[self.year]}\n"
+                                f"\tСтатус: {v[self.status]}\n"
+                            )
                 if not flag:
                     print("\nНе найдено ни одной книги\n")
                     return 1
@@ -99,14 +98,20 @@ class Library:
                         break
                 if not flag:
                     print("К сожалению данного id не существует")
-                    if input("Попробовать еще раз (Enter/n): ") != "n": 
-                        Library.delete(self) 
+                    if input("Попробовать еще раз (Enter/n): ") != "n":
+                        Library.delete(self)
 
-            with open(self.data, "w", encoding="utf-8", errors="replace") as file:
+            with open(
+                self.data, "w", encoding="utf-8", errors="replace"
+            ) as file:
                 json.dump(data, file, indent=2)
+
+            inp = input('"y" - удалить еще, для выхода нажмите enter: ')
+            while inp == "y":
+                Library().delete()
+                inp = input('Нажмите "y" - удалить еще: ')
         except FileNotFoundError:
             print("\nК сожалению библиотека пуста, поэтому удалять нечего\n")
-
 
     def change_status(self):
         try:
@@ -116,24 +121,26 @@ class Library:
                     return
                 id = str(input("id книги: "))
                 flag = False
-                for value in data.values():
+                for key, value in data.items():
                     if id in value:
                         flag = True
 
                         print(f"\nТекущий статус: {value[id][self.status]}")
                         inp = input(
-        """
+                            """
         0 - Выдана
         1 - В наличии 
 
 
 Ваш выбор: """
                         )
-                        
+
                         while inp not in ("0", "1"):
-                            print(f"\nТекущий статус: {value[id][self.status]}")
+                            print(
+                                f"\nТекущий статус: {value[id][self.status]}"
+                            )
                             inp = input(
-        """
+                                """
         0 - Выдана
         1 - В наличии 
 
@@ -141,18 +148,21 @@ class Library:
 Ваш выбор: """
                             )
 
-                        value[id][self.status] = (
-                            "Выдана", "В наличии")[int(inp)]
-                        break
-                
+                        value[id][self.status] = ("Выдана", "В наличии")[
+                            int(inp)
+                        ]
+                        print(
+                            f'\nТекущий статус у {key} "{value[id][self.title]}" - '
+                            f"{value[id][self.status]}\n"
+                        )
                 if not flag:
                     print("К сожалению данного id не существует")
-                    if input("Попробовать еще раз (Enter/n): ") != "n": 
-                        Library.change_status(self) 
-                
+                    if input("Попробовать еще раз (Enter/n): ") != "n":
+                        Library.change_status(self)
+
             with open(self.data, "w", encoding="utf-8") as file:
                 json.dump(data, file, indent=2)
         except FileNotFoundError:
-            print("\nОперация невозможна в связи с тем, что нет никаких данных\n")
-            
-
+            print(
+                "\nОперация невозможна в связи с тем, что нет никаких данных\n"
+            )

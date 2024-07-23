@@ -16,24 +16,20 @@ def main():
             q. Выход
             """
     )
-    match input("Введите число для выбора (1-4) или q для выхода "):
+    match input("Введите число для выбора (1-4) или q для выхода: "):
         case "1":
             (
                 library.update()
                 if os.path.exists("data.json")
                 else library.create()
             )
-            inp = input('Нажмите "y" - добавить еще: ')
+            inp = input('"y" - добавить еще, для выхода нажмите enter: ')
             while inp == "y":
                 library.update()
-                inp = input('Нажмите "y" - добавить еще: ')
+                inp = input('"y" - добавить еще, для выхода нажмите enter: ')
 
         case "2":
             library.delete()
-            inp = input('Нажмите "y" - удалить еще: ')
-            while inp == "y":
-                library.delete()
-                inp = input('Нажмите "y" - удалить еще: ')
         case "3":
             library.read()
         case "4":
@@ -41,7 +37,7 @@ def main():
         case "q":
             exit()
         case _:
-            print("Введите число от 1 до 4 или q для выхода")
+            print("Введите число от 1 до 4 или q для выхода: ")
             main()
     (main() if input("Меню - Enter, q - выход ") != "q" else exit())
 
