@@ -23,13 +23,19 @@ def main():
                 if os.path.exists("data.json")
                 else library.create()
             )
+            inp = input('Нажмите "y" - добавить еще: ')
+            while inp == "y":
+                library.update()
+                inp = input('Нажмите "y" - добавить еще: ')
+
         case "2":
             library.delete()
+            inp = input('Нажмите "y" - удалить еще: ')
+            while inp == "y":
+                library.delete()
+                inp = input('Нажмите "y" - удалить еще: ')
         case "3":
             library.read()
-            # if os.path.exists("data.json")
-            # else print("Пока что библиотека пуста")
-
         case "4":
             library.change_status()
         case "q":

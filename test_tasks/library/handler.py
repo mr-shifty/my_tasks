@@ -75,6 +75,7 @@ class Library:
                     )
                 if not flag:
                     print("\nНе найдено ни одной книги\n")
+                    return 1
 
         except FileNotFoundError:
             print("\nПока что библиотека пуста, самое время пополнить ее\n")
@@ -83,7 +84,8 @@ class Library:
         try:
             with open(self.data, encoding="utf-8") as file:
                 data = json.load(file)
-                Library().read()
+                if Library.read(self) == 1:
+                    return
                 remove_id = str(input("Напишите id удаляемой книги: "))
                 flag = False
                 for key, value in data.items():
@@ -110,7 +112,8 @@ class Library:
         try:
             with open(self.data, encoding="utf-8") as file:
                 data = json.load(file)
-                Library().read()
+                if Library.read(self) == 1:
+                    return
                 id = str(input("id книги: "))
                 flag = False
                 for value in data.values():
