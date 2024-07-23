@@ -90,7 +90,7 @@ class Library:
             with open(self.data, encoding="utf-8") as file:
                 data = json.load(file)
                 if Library.read(self) == 1:
-                    return
+                    return 1
                 remove_id = str(input("Напишите id удаляемой книги: "))
                 flag = False
                 for key, value in data.items():
@@ -106,16 +106,14 @@ class Library:
                     print("К сожалению данного id не существует")
                     if input("Попробовать еще раз (Enter/n): ") != "n":
                         Library.delete(self)
+                    else:
+                        return 0
 
-            with open(
-                self.data, "w", encoding="utf-8", errors="ignore"
-            ) as file:
+            with open(self.data, "w", encoding="utf-8") as file:
                 json.dump(data, file, indent=2)
 
-            inp = input('"y" - удалить еще, для выхода нажмите enter: ')
-            while inp == "y":
+            if input('"y" - удалить еще, для выхода нажмите enter: ') == "y":
                 Library().delete()
-                inp = input('Нажмите "y" - удалить еще: ')
         except FileNotFoundError:
             print("\nК сожалению библиотека пуста, поэтому удалять нечего\n")
 
