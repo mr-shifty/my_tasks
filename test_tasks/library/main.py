@@ -9,15 +9,13 @@ library = Library()
 def main():
     print(
         """
-            1. Добавить книгу,
-            2. Удалить книгу,
-            3. Отобразить все книги,
+            1. Добавить книгу
+            2. Удалить книгу
+            3. Отобразить все книги
             4. Изменить статус книги
             q. Выход
             """
     )
-    # try:
-
     match input("Введите число для выбора (1-4) или q для выхода "):
         case "1":
             (
@@ -28,7 +26,12 @@ def main():
         case "2":
             library.delete()
         case "3":
-            library.read()
+            (
+                library.read()
+                if os.path.exists("data.json")
+                else print("Пока что библиотека пуста")
+            )
+
         case "4":
             library.change_status()
         case "q":
@@ -36,11 +39,7 @@ def main():
         case _:
             print("Введите число от 1 до 4 или q для выхода")
             main()
-    (main() if input("Продолжить - Enter, q - выход ") != "q" else exit())
-
-    # except ValueError:
-    #     print("Дурак? Сказали же число ввести")
-    #     main()
+    (main() if input("Меню - Enter, q - выход ") != "q" else exit())
 
 
 if __name__ == "__main__":

@@ -6,13 +6,13 @@ class Library:
     def __init__(self) -> None:
         self.id = int(time.time() * 1000)
         self.data = "data.json"
-        self.title = "title"
-        self.author = "author"
-        self.year = "year"
-        self.status = "status"
+        self.title = "Название книги"
+        self.author = "Автор"
+        self.year = "Год издания"
+        self.status = "Статус книги"
 
     def create(self):
-        with open("data.json", "w", encoding="utf-8") as file:
+        with open("data.json", "w", encoding="utf-8", errors="replace") as file:
 
             dct = {
                 input("Введите автора: "): {
@@ -23,10 +23,11 @@ class Library:
                     },
                 },
             }
-            return json.dump(dct, file, ensure_ascii=False, indent=2)
+            json.dump(dct, file, indent=2)
+        print("Книга успешно добавлена") 
 
     def update(self):
-        with open(self.data, encoding="utf-8") as file:
+        with open(self.data, encoding="utf-8", errors="replace") as file:
             self.id = int(time.time() * 1000)
             data = json.load(file)
             self.author = input("Введите автора: ")
@@ -48,44 +49,90 @@ class Library:
                     self.year: int(input("Введите год: ")),
                     self.status: "В наличии",
                 }
+        print("Книга успешно добавлена") 
 
-        with open(self.data, "w", encoding="utf-8") as file:
-            json.dump(data, file, ensure_ascii=False, indent=2)
-
-    def delete(self):
-        with open(self.data, encoding="utf-8") as file:
-            data = json.load(file)
-            self.author = input("Введите имя автора, книгу которого удаляем: ")
-            remove_id = str(input("Напишите id удаляемой книги"))
-            removed = data[self.author].pop(remove_id)
-        with open(self.data, "w", encoding="utf-8") as file:
-            json.dump(data, file, ensure_ascii=False, indent=2)
-        print(f"Удален {removed} ")
+        with open(self.data, "w", encoding="utf-8", errors="replace") as file:
+            json.dump(data, file, indent=2)
 
     def read(self):
         with open(self.data, encoding="utf=8") as file:
             data = json.load(file)
             for key, value in data.items():
-                print(f"\n{key}: {value}")
+                if value:
+                    print(
+                        f"\nАвтор: {key}\n"
+                        f"Книги:"
+                    )
+                    for k, v in value.items():
+                        print(
+                                f"\tid: {k}\n"
+                                f"\tНазвание: {v[self.title]}\n"
+                                f"\tГод издания: {v[self.year]}\n"
+                                f"\tСтатус: {v[self.status]}\n"
+                    )
+    def delete(self):
+        with open(self.data, encoding="utf-8") as file:
+            data = json.load(file)
+            Library().read()
+            remove_id = str(input("Напишите id удаляемой книги "))
+            flag = False
+            for key, value in data.items():
+                if remove_id in value:
+                    flag = True
+                    removed = value.pop(remove_id)
+                    print(
+                        f"\nКнига успешно удалена:\n\n\t{key}: "
+                        f"{removed[self.title]}({removed[self.year]}г.)\n"
+                    )
+                    break
+            if not flag:
+                print("К сожалению данного id не существует")
+                if input("Попробовать еще раз (Enter/n): ") != "n": 
+                    Library.delete(self) 
+
+        with open(self.data, "w", encoding="utf-8", errors="replace") as file:
+            json.dump(data, file, indent=2)
+
 
     def change_status(self):
         with open(self.data, encoding="utf-8") as file:
             data = json.load(file)
-            self.author = input("Введите имя автора: ")
+            Library().read()
             id = str(input("id книги: "))
-            print(f"\nТекущий статус: {data[self.author][id][self.status]}")
-            data[self.author][id][self.status] = [
-                "Нет в наличии", "В наличии"][int(input(
-"""
-            0 - Нет в наличии
-            1 - В наличии 
+            flag = False
+            for value in data.values():
+                if id in value:
+                    flag = True
+
+                    print(f"\nТекущий статус: {value[id][self.status]}")
+                    inp = input(
+        """
+        0 - Выдана
+        1 - В наличии 
+
+
+Ваш выбор: """)
+                    while inp not in ("0", "1"):
+                        print(f"\nТекущий статус: {value[id][self.status]}")
+                        inp = input(
+        """
+        0 - Выдана
+        1 - В наличии 
 
 
 Ваш выбор: """
-            ))
-            ]
+                    )
+
+                    value[id][self.status] = (
+                        "Выдана", "В наличии")[int(inp)]
+                    break
+            
+            if not flag:
+                print("К сожалению данного id не существует")
+                if input("Попробовать еще раз (Enter/n): ") != "n": 
+                    Library.change_status(self) 
             
         with open(self.data, "w", encoding="utf-8") as file:
-            json.dump(data, file, ensure_ascii=False, indent=2)
+            json.dump(data, file, indent=2)
             
 
