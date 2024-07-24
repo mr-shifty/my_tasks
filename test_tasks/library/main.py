@@ -29,7 +29,23 @@ def main():
                 inp = input('"y" - добавить еще, для выхода нажмите enter: ')
 
         case "2":
-            library.delete()
+            while True:
+                delete = library.delete()
+                match delete:
+                    case 0:
+                        if (
+                            input(
+                                '"y" - удалить еще, для выхода нажмите enter: '
+                            )
+                            != "y"
+                        ):
+                            break
+                    case 1:
+                        if input("Попробовать еще раз (Enter/n): ") == "n":
+                            break
+                    case _:
+                        break
+
         case "3":
             library.read()
         case "4":
