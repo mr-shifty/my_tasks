@@ -87,6 +87,17 @@ class Library:
         except FileNotFoundError:
             print("\nПока что библиотека пуста, самое время пополнить ее\n")
 
+    def search(self):
+
+        try:
+            with open(self.data, encoding="utf-8") as file:
+                data = json.load(file)
+                if Library.read(self) == 1:
+                    return
+
+        except FileNotFoundError:
+            print("\nНичего не найдем в пустоте\n")
+
     def delete(self):
         try:
             with open(self.data, encoding="utf-8") as file:

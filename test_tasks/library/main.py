@@ -12,8 +12,9 @@ def main():
         """
             1. Добавить книгу
             2. Удалить книгу
-            3. Отобразить все книги
-            4. Изменить статус книги
+            3. Найти книгу
+            4. Отобразить все книги
+            5. Изменить статус книги
             q. Выход
             """
     )
@@ -46,15 +47,16 @@ def main():
                             break
                     case _:
                         break
-
         case "3":
-            library.read()
+            pass
         case "4":
+            library.read()
+        case "5":
             library.change_status()
         case "q":
             exit()
         case _:
-            print("Введите число от 1 до 4 или q для выхода: ")
+            print("Введите число от 1 до 5 или q для выхода: ")
             main()
     (main() if input("Меню - Enter, q - выход ") != "q" else exit())
 
