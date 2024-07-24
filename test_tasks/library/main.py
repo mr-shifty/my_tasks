@@ -1,7 +1,8 @@
 import os
 
-from handler import Library
 from rich import print
+
+from test_tasks.library.handler import Library
 
 library = Library()
 

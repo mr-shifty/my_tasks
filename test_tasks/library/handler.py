@@ -1,6 +1,8 @@
 import json
 import time
 
+from test_tasks.library.validator import check_year
+
 
 class Library:
     def __init__(self) -> None:
@@ -18,7 +20,7 @@ class Library:
                 input("Введите автора: "): {
                     self.id: {
                         self.title: input("Введите название книги: "),
-                        self.year: int(input("Введите год: ")),
+                        self.year: check_year(input("Введите год: ")),
                         self.status: "В наличии",
                     },
                 },
@@ -37,7 +39,7 @@ class Library:
                         self.author: {
                             self.id: {
                                 self.title: input("Введите название книги: "),
-                                self.year: int(input("Введите год: ")),
+                                self.year: check_year(input("Введите год: ")),
                                 self.status: "В наличии",
                             },
                         },
@@ -46,7 +48,7 @@ class Library:
             else:
                 data[self.author][self.id] = {
                     self.title: input("Введите название книги: "),
-                    self.year: int(input("Введите год: ")),
+                    self.year: check_year(input("Введите год: ")),
                     self.status: "В наличии",
                 }
         print("Книга успешно добавлена")
