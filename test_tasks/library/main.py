@@ -1,7 +1,6 @@
 import os
 
 from handler import Library
-from rich import print
 
 library = Library()
 
