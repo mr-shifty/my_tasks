@@ -147,12 +147,12 @@ class Library:
         try:
             with open(self.data, encoding="utf-8") as file:
                 data = json.load(file)
-                remove_id = str(input("Напишите id удаляемой книги: "))
+                remove_id = str(input("\nНапишите id удаляемой книги: "))
                 flag = False
                 for key, value in data.items():
                     if remove_id in value:
                         flag = True
-                        inp = input(f"Найдена {key}: "
+                        inp = input(f"\nНайдена {key}: "
                             f"{"".join(
                             map(lambda x: x[self.title], value.values())
                             )}."
