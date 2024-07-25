@@ -1,8 +1,7 @@
 import os
 
+from handler import Library
 from rich import print
-
-from test_tasks.library.handler import Library
 
 library = Library()
 
@@ -48,7 +47,7 @@ def main():
                     case _:
                         break
         case "3":
-            pass
+            library.search()
         case "4":
             library.read()
         case "5":
@@ -58,7 +57,8 @@ def main():
         case _:
             print("Введите число от 1 до 5 или q для выхода: ")
             main()
-    (main() if input("Меню - Enter, q - выход ") != "q" else exit())
+    # (main() if input("Меню - Enter, q - выход ") != "q" else exit())
+    main()
 
 
 if __name__ == "__main__":

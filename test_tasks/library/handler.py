@@ -1,7 +1,7 @@
 import json
 import time
 
-from test_tasks.library.validator import check_year
+from validator import check_year
 
 
 class Library:
@@ -13,6 +13,49 @@ class Library:
         self.year = "Год издания"
         self.status = "Статус книги"
 
+    def search(self):
+
+        try:
+            with open(self.data, encoding="utf-8") as file:
+                data = json.load(file)
+                # if Library.read(self) == 1:
+                #     return
+
+                search_data = input("Введите название, автора или год издания книги: ")
+                for key, value in data.items():
+                    if value: 
+                        if key == search_data:
+                            print(
+                                f"\nАвтор: {key} ({len(value.values())} шт.)\n"
+                                f"Книги:"
+                            )
+                            for k, v in value.items():
+                                print(
+                                    f"\tid: {k}\n"
+                                    f"\tНазвание: {v[self.title]}\n"
+                                    f"\tГод издания: {v[self.year]}\n"
+                                    f"\tСтатус: {v[self.status]}\n"
+                                )
+                                print(value.values())
+                        else:
+                            for k, v in value.items():
+                                if v[self.title] == search_data or v[self.year] == search_data:
+                                    print(
+                                    f"\nАвтор: {key} ({len(value.values())} шт.)\n"
+                                    f"Книги:"
+                                    )
+                                    print(
+                                        f"\tid: {k}\n"
+                                        f"\tНазвание: {v[self.title]}\n"
+                                        f"\tГод издания: {v[self.year]}\n"
+                                        f"\tСтатус: {v[self.status]}\n"
+                                    )
+
+
+
+
+        except FileNotFoundError:
+            print("\nНичего не найдем в пустоте\n")
     def create(self):
         with open("data.json", "w", encoding="utf-8", errors="ignore") as file:
 
@@ -87,16 +130,6 @@ class Library:
         except FileNotFoundError:
             print("\nПока что библиотека пуста, самое время пополнить ее\n")
 
-    def search(self):
-
-        try:
-            with open(self.data, encoding="utf-8") as file:
-                data = json.load(file)
-                if Library.read(self) == 1:
-                    return
-
-        except FileNotFoundError:
-            print("\nНичего не найдем в пустоте\n")
 
     def delete(self):
         try:
