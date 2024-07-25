@@ -1,7 +1,7 @@
 import json
 import time
 
-from validator import check_year
+from validator import check_year, find_match
 
 
 class Library:
@@ -18,15 +18,14 @@ class Library:
         try:
             with open(self.data, encoding="utf-8") as file:
                 data = json.load(file)
-                # if Library.read(self) == 1:
-                #     return
-
-                search_data = input("Введите название, автора или год издания книги: ")
+                search_data = input("\nВведите название, автора или год издания книги: ").lower()
+                flag = False
                 for key, value in data.items():
                     if value: 
-                        if key == search_data:
+                        if find_match(key, search_data):
+                            flag = True
                             print(
-                                f"\nАвтор: {key} ({len(value.values())} шт.)\n"
+                                f"\nАвтор: {key}\n"
                                 f"Книги:"
                             )
                             for k, v in value.items():
@@ -36,12 +35,18 @@ class Library:
                                     f"\tГод издания: {v[self.year]}\n"
                                     f"\tСтатус: {v[self.status]}\n"
                                 )
-                                print(value.values())
                         else:
                             for k, v in value.items():
-                                if v[self.title] == search_data or v[self.year] == search_data:
+                                if find_match(
+                                    search_data,
+                                    v[self.title]
+                                ) or find_match(
+                                        search_data,
+                                        v[self.year] 
+                                    ):
+                                    flag = True
                                     print(
-                                    f"\nАвтор: {key} ({len(value.values())} шт.)\n"
+                                    f"\nАвтор: {key}\n"
                                     f"Книги:"
                                     )
                                     print(
@@ -52,10 +57,17 @@ class Library:
                                     )
 
 
+            if not flag:
+                print("\nК сожалению ничего не найдено\n")
+                return 1
+            return 0
 
 
         except FileNotFoundError:
-            print("\nНичего не найдем в пустоте\n")
+            print("\nНичего не найдем в пустоте, самое время добавить первую книгу\n")
+            return 1
+
+
     def create(self):
         with open("data.json", "w", encoding="utf-8", errors="ignore") as file:
 
@@ -69,7 +81,7 @@ class Library:
                 },
             }
             json.dump(dct, file, indent=2)
-        print("Книга успешно добавлена")
+        print("\nКнига успешно добавлена\n")
 
     def update(self):
         with open(self.data, encoding="utf-8", errors="ignore") as file:
@@ -94,7 +106,7 @@ class Library:
                     self.year: check_year(input("Введите год: ")),
                     self.status: "В наличии",
                 }
-        print("Книга успешно добавлена")
+        print("\nКнига успешно добавлена\n")
 
         with open(self.data, "w", encoding="utf-8", errors="ignore") as file:
             json.dump(data, file, indent=2)
@@ -135,19 +147,30 @@ class Library:
         try:
             with open(self.data, encoding="utf-8") as file:
                 data = json.load(file)
-                if Library.read(self) == 1:
-                    return
                 remove_id = str(input("Напишите id удаляемой книги: "))
                 flag = False
                 for key, value in data.items():
                     if remove_id in value:
                         flag = True
-                        removed = value.pop(remove_id)
-                        print(
-                            f"\nКнига успешно удалена:\n\n\t{key}: "
-                            f"{removed[self.title]}({removed[self.year]}г.)\n"
-                        )
-                        break
+                        inp = input(f"Найдена {key}: "
+                            f"{"".join(
+                            map(lambda x: x[self.title], value.values())
+                            )}."
+                            " Удаляем? y/n ")
+                        match inp:
+                            case "y":
+                                removed = value.pop(remove_id)
+                                print(
+                                    f"\nКнига успешно удалена:\n\n\t{key}: "
+                                    f"{removed[self.title]}({removed[self.year]}г.)\n"
+                                )
+                                break
+                            case "n":
+                                print("\nОперация отменена\n")
+                                return
+                            case _:
+                                print("Неверный ответ, операция не выполнена")
+                                return
                 if not flag:
                     print("К сожалению данного id не существует")
                     return 1
@@ -163,8 +186,6 @@ class Library:
         try:
             with open(self.data, encoding="utf-8") as file:
                 data = json.load(file)
-                if Library.read(self) == 1:
-                    return
                 id = str(input("id книги: "))
                 flag = False
                 for key, value in data.items():

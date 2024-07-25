@@ -1,7 +1,7 @@
 import re
 
 
-def check_year(year: str):
+def check_year(year: str) -> str:
     while True:
         if re.fullmatch(r"(?!0)\d{4}", str(year)):
             return year
@@ -10,5 +10,5 @@ def check_year(year: str):
         )
 
 
-if __name__ == "__main":
-    check_year("1234")
+def find_match(pattern: str, data: str) -> bool:
+    return bool(re.findall(rf"(?i)[{pattern}]{{2,}}", data))
