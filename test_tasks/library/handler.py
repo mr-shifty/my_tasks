@@ -18,16 +18,15 @@ class Library:
         try:
             with open(self.data, encoding="utf-8") as file:
                 data = json.load(file)
-                search_data = input("\nВведите название, автора или год издания книги: ").lower()
+                search_data = input(
+                    "\nВведите название, автора или год издания книги: "
+                ).lower()
                 flag = False
                 for key, value in data.items():
-                    if value: 
+                    if value:
                         if find_match(key, search_data):
                             flag = True
-                            print(
-                                f"\nАвтор: {key}\n"
-                                f"Книги:"
-                            )
+                            print(f"\nАвтор: {key}\n" f"Книги:")
                             for k, v in value.items():
                                 print(
                                     f"\tid: {k}\n"
@@ -38,17 +37,10 @@ class Library:
                         else:
                             for k, v in value.items():
                                 if find_match(
-                                    search_data,
-                                    v[self.title]
-                                ) or find_match(
-                                        search_data,
-                                        v[self.year] 
-                                    ):
+                                    search_data, v[self.title]
+                                ) or find_match(search_data, v[self.year]):
                                     flag = True
-                                    print(
-                                    f"\nАвтор: {key}\n"
-                                    f"Книги:"
-                                    )
+                                    print(f"\nАвтор: {key}\n" f"Книги:")
                                     print(
                                         f"\tid: {k}\n"
                                         f"\tНазвание: {v[self.title]}\n"
@@ -56,17 +48,16 @@ class Library:
                                         f"\tСтатус: {v[self.status]}\n"
                                     )
 
-
             if not flag:
                 print("\nК сожалению ничего не найдено\n")
                 return 1
             return 0
 
-
         except FileNotFoundError:
-            print("\nНичего не найдем в пустоте, самое время добавить первую книгу\n")
+            print(
+                "\nНичего не найдем в пустоте, самое время добавить первую книгу\n"
+            )
             return 1
-
 
     def create(self):
         with open("data.json", "w", encoding="utf-8", errors="ignore") as file:
@@ -142,7 +133,6 @@ class Library:
         except FileNotFoundError:
             print("\nПока что библиотека пуста, самое время пополнить ее\n")
 
-
     def delete(self):
         try:
             with open(self.data, encoding="utf-8") as file:
@@ -152,11 +142,13 @@ class Library:
                 for key, value in data.items():
                     if remove_id in value:
                         flag = True
-                        inp = input(f"\nНайдена {key}: "
+                        inp = input(
+                            f"\nНайдена {key}: "
                             f"{"".join(
                             map(lambda x: x[self.title], value.values())
                             )}."
-                            " Удаляем? y/n ")
+                            " Удаляем? (y/n) "
+                        )
                         match inp:
                             case "y":
                                 removed = value.pop(remove_id)

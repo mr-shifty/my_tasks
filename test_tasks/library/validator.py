@@ -11,4 +11,4 @@ def check_year(year: str) -> str:
 
 
 def find_match(pattern: str, data: str) -> bool:
-    return bool(re.findall(rf"(?i)[{pattern}]{{2,}}", data))
+    return bool(re.findall(rf"(?i)[{pattern}]{{2,}}", str(data)))
