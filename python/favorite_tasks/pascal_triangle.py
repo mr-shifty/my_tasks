@@ -1,10 +1,10 @@
 import pretty_errors
 from rich import print
 
-from features.execute_time import execute_time
+from features.decorators import execute_time
 
 
-@execute_time
+@execute_time()
 def pascal():
     n = 7
     lst = []
