@@ -48,23 +48,35 @@ Cоздает список, который выглядит как lst = [[], []
 # lst = ["a", "b", "c", "d", "e"]
 # print(lst[10:])
 
+
 """
 Декоратор
 """
-# def print_hello():
-#     def wrapper(func):
-#         print("Hello world!!!")
-#         return func
-#
-#     return wrapper
-#
-#
-# @print_hello()
-# def print_hi():
-#     print("Привет")
-#
-#
-# print_hi()
+
+
+def sayHello(func):
+    def wrapper(*args, **kwargs):
+        return f"Hello {func()}"
+
+    return wrapper
+
+
+def sayGoodbuy(func):
+    def wrapper(*args, **kwargs):
+
+        return f"Goodbuy {func()}"
+
+    return wrapper
+
+
+# @sayHello  # Задекорировать коротко
+# @sayGoodbuy
+def printSmth():
+    return "World"
+
+
+# printSmth = sayHello(printSmth)  # Или можно задекорировать так
+# print(printSmth())
 
 
 class Person:
