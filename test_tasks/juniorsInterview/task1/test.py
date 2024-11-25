@@ -1,6 +1,11 @@
 import unittest
 
-from solution import sum_two
+from solution import strict
+
+
+@strict
+def sum_two(a: int, b: int) -> int:
+    return a + b
 
 
 class TestStrictDecorator(unittest.TestCase):
@@ -8,7 +13,7 @@ class TestStrictDecorator(unittest.TestCase):
 
     def test_valid_arguments(self):
         """Проверка на корректный вывод"""
-        self.assertEqual(sum_two(1, 2), 3)  # Ожидаем 3 для корректных аргументов
+        self.assertEqual(sum_two(1, 2), 3)
 
     def test_invalid_argument_type_float(self):
         """Соответствие аргументов типам данных (float)"""
@@ -22,7 +27,7 @@ class TestStrictDecorator(unittest.TestCase):
     def test_invalid_argument_type_string(self):
         """Соответствие аргументов типам данных (str)"""
         with self.assertRaises(TypeError) as context:
-            sum_two(1, "two")  # Ожидается исключение TypeError
+            sum_two(1, "two")
         self.assertEqual(
             str(context.exception),
             f"Переданы неверные аргументы в функцию sum_two",
@@ -31,7 +36,7 @@ class TestStrictDecorator(unittest.TestCase):
     def test_invalid_argument_count(self):
         """Передано нужное количество аргументов"""
         with self.assertRaises(TypeError) as context:
-            sum_two(1)  # Ожидается исключение TypeError из-за недостатка аргументов
+            sum_two(1)
         self.assertEqual(
             str(context.exception),
             "sum_two() missing 1 required positional argument: 'b'",
