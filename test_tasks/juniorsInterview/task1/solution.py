@@ -1,7 +1,10 @@
 from inspect import signature
+from typing import Any, Callable
 
 
-def strict(func):
+def strict(func: Callable[[Any], Any]) -> Callable[[Any], Any]:
+    """Декоратор, валидирующий аргументы на соответствие типам данных"""
+
     def wrapper(*args, **kwargs):
         sig = signature(func)
         if all(

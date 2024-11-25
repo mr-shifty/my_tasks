@@ -1,38 +1,38 @@
 def appearance(intervals: dict[str, list[int]]) -> int:
-    lesson_start, lesson_end = intervals["lesson"]
+    lessonStart, lessonEnd = intervals["lesson"]
 
-    pupil_intervals = []
-    tutor_intervals = []
+    pupilIntervals = []
+    tutorIntervals = []
 
     for i in range(0, len(intervals["pupil"]), 2):
-        pupil_intervals.append((intervals["pupil"][i], intervals["pupil"][i + 1]))
+        pupilIntervals.append((intervals["pupil"][i], intervals["pupil"][i + 1]))
 
     for i in range(0, len(intervals["tutor"]), 2):
-        tutor_intervals.append((intervals["tutor"][i], intervals["tutor"][i + 1]))
+        tutorIntervals.append((intervals["tutor"][i], intervals["tutor"][i + 1]))
 
-    presence_intervals = []
+    presenceIntervals = []
 
-    for pupil_start, pupil_end in pupil_intervals:
-        for tutor_start, tutor_end in tutor_intervals:
-            intersection_start = max(pupil_start, tutor_start, lesson_start)
-            intersection_end = min(pupil_end, tutor_end, lesson_end)
+    for pupilStart, pupilEnd in pupilIntervals:
+        for tutorStart, tutorEnd in tutorIntervals:
+            intersectionStart = max(pupilStart, tutorStart, lessonStart)
+            intersectionEnd = min(pupilEnd, tutorEnd, lessonEnd)
 
-            if intersection_start < intersection_end:
-                presence_intervals.append((intersection_start, intersection_end))
+            if intersectionStart < intersectionEnd:
+                presenceIntervals.append((intersectionStart, intersectionEnd))
 
-    merged_intervals = []
-    for start, end in sorted(presence_intervals):
-        if not merged_intervals or merged_intervals[-1][1] < start:
-            merged_intervals.append((start, end))
+    mergedIntervals = []
+    for start, end in sorted(presenceIntervals):
+        if not mergedIntervals or mergedIntervals[-1][1] < start:
+            mergedIntervals.append((start, end))
         else:
-            merged_intervals[-1] = (
-                merged_intervals[-1][0],
-                max(merged_intervals[-1][1], end),
+            mergedIntervals[-1] = (
+                mergedIntervals[-1][0],
+                max(mergedIntervals[-1][1], end),
             )
 
-    total_presence_time = sum(end - start for start, end in merged_intervals)
+    totalPresenceTime = sum(end - start for start, end in mergedIntervals)
 
-    return total_presence_time
+    return totalPresenceTime
 
 
 tests = [
@@ -108,10 +108,10 @@ tests = [
 if __name__ == "__main__":
     try:
         for i, test in enumerate(tests):
-            test_answer = appearance(test["intervals"])
+            testAnswer = appearance(test["intervals"])
             assert (
-                test_answer == test["answer"]
-            ), f'Error on test case {i}, got {test_answer}, expected {test["answer"]}'
+                testAnswer == test["answer"]
+            ), f'Error on test case {i}, got {testAnswer}, expected {test["answer"]}'
         print("Completed tests")
     except Exception as e:
         print(f"Error when tests {e}")
